@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="dist/styles.css" />
+    <script
+      defer
+      src="https://kit.fontawesome.com/37007fa821.js"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="app/script.js"></script>
+    <title>FrontEnd Mentor Challenge[Rest Countries API]</title>
+  </head>
+  <body class="relative overflow-x-hidden h-full w-full">
+    <header
+      class="w-full h-[10vh] md:h-[13vh] flex items-center justify-center z-[4000] relative"
+    >
+      <nav
+        class="mx-8 max-w-full md:container flex justify-between items-center w-full"
+      >
+        <div class="question font-semibold">
+          <h2 class="text-sm md:text-lg">Where in the world?</h2>
+        </div>
+
+        <div class="bgToggle flex items-center cursor-pointer">
+          <i class="fa-solid fa-sun mr-2 rotate-[-30deg]"></i>
+          <p class="text-sm">Light Mode</p>
+        </div>
+      </nav>
+    </header>
+
+    <main
+      class="w-full h-full mt-5 flex-col flex justify-center md:items-center"
+    >
+      <section class="inner--section mx-8 max-w-full md:container">
+        <div
+          class="navigation--section flex flex-col justify-start md:flex-row md:items-center md:justify-between"
+        >
+          <div class="input--container w-full md:w-[500px] relative">
+            <input
+              type="text"
+              placeholder="Search for a country..."
+              class="text-sm px-6 pl-12 py-3 w-full rounded outline-none cursor-pointer"
+              autofocus
+            />
+            <i
+              class="fa-solid fa-magnifying-glass absolute top-[14px] left-3"
+            ></i>
+          </div>
+
+          <div
+            class="filter--container text-sm w-1/2 mt-8 rounded md:mt-0 md:w-[200px] relative"
+          >
+            <div
+              class="filterbyregion px-4 py-4 rounded md:py-3 cursor-pointer flex items-center justify-between"
+            >
+              <p class="text-sm">Filter By Region</p>
+              <i class="fa-solid fa-angle-up"></i>
+            </div>
+
+            <div
+              class="dropdown mt-3 px-4 py-4 rounded text-sm hidden absolute w-full"
+            >
+              <ul>
+                <li class="py-1"><a href="#">Africa</a></li>
+                <li class="py-1"><a href="#">America</a></li>
+                <li class="py-1"><a href="#">Asia</a></li>
+                <li class="py-1"><a href="#">Europe</a></li>
+                <li class="py-1"><a href="#">Oceania</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- *country section -->
+      <section
+        class="countries mx-8 max-w-full md:container mt-10 items-center flex-wrap justify-center gap-[2rem] lg:gap-[2.9rem] flex"
+      ></section>
+
+      <!-- loader spinner -->
+      <div class="loader" id="loader"></div>
+
+      <!-- Todo: add flex and remove hidden whenever you do want to use it -->
+      <section
+        class="outer-container max-w-full w-full h-full absolute top-[10vh] md:top-[13vh] left-0 translate-x-[100%] flex items-center justify-center"
+      ></section>
+    </main>
+  </body>
+</html>

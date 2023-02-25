@@ -91,23 +91,14 @@ class Countries {
   detailsPage(data) {
     // prettier-ignore
     let html = `        
-    <section class="detailsPage mx-8 md:container max-w-full w-full h-full flex-col items-center justify-start relative mt-[-50px] flex"
-        >
-          <button
-            class="back px-8 text-sm py-2 rounded absolute left-0 top-[40px] my-8"
-          >
+    <section class="detailsPage mx-8 md:container max-w-full w-full h-full flex-col items-center justify-start relative mt-[-50px] flex">
+          <button class="back px-8 text-sm py-2 rounded absolute left-0 top-[40px] my-8">
             <i class="fa-solid fa-arrow-left"></i> Back
           </button>
-          <div
-            class="country-full-details mt-32 md:flex justify-between items-center w-full md:gap-[3rem] lg:gap-0"
-          >
-            <img src="${data.flags.png}" alt="${
-      data.name.official
-    }" class="w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]">
+          <div class="country-full-details mt-32 md:flex justify-between items-center w-full md:gap-[3rem] lg:gap-0">
+            <img src="${data.flags.png}" alt="${data.name.official}" class="w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]">
 
-            <div
-              class="detail-container mt-6 md:flex md:gap-[0.3rem] flex-col lg:gap-[1rem]"
-            >
+            <div class="detail-container mt-6 md:flex md:gap-[0.3rem] flex-col lg:gap-[1rem]">
               <h2 class="font-bold text-lg md:text-xl">${data.name.common}</h2>
               <div class="detail my-4 md:flex items-start gap-[3rem]">
                 <div class="detail1">
@@ -121,10 +112,7 @@ class Countries {
                     <span class="font-semibold">Region:</span> ${data.region}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Sub Region:</span> ${
-                      data.subregion
-                    }
-                    Europe
+                    <span class="font-semibold">Sub Region:</span> ${data.subregion}
                   </p>
                   <p class="text-sm py-1">
                     <span class="font-semibold">Capital:</span> ${data.capital}
@@ -133,9 +121,7 @@ class Countries {
 
                 <div class="detail2 my-6 md:my-0">
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Top Level Domain:</span> ${
-                      data.tld[0]
-                    }
+                    <span class="font-semibold">Top Level Domain:</span> ${data.tld[0]}
                   </p>
                   <p class="text-sm py-1">
                     <span class="font-semibold">Currencies:</span> Euro
@@ -150,24 +136,31 @@ class Countries {
               <div class="border-countries--container md:flex gap-[1rem]">
                 <h2 class="font-bold my-3">Border Countries:</h2>
                 <div class="border-countries flex gap-3 items-center">
-                  <div
-                    class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer"
-                  >
+                  <div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer">
                     France
                   </div>
-                  <div
-                    class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer"
-                  >
+                  <div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer">
                     Germany
                   </div>
-                  <div
-                    class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer"
-                  >
+                  <div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer">
                     Netherlands
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+
+          <div class="map--container flex flex-col md:flex-row my-16 gap-[2rem] justify-center md:justify-between items-center w-full">
+          <div class="country--location--container">
+            <h2 class="text-3xl font-bold my-3">${data.name.common}'s Location</h2>
+            <div class="country--location bg-red-500 w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]"></div>
+          </div>
+            <div class="country-info flex flex-col items-center text-center justify-center">
+              <h2 class="text-1xl font-bold">Your Current Location</h2>
+              <i class="fa-solid fa-arrow-down fa-2x arrow sm:block md:hidden"></i>
+              <i class="fa-solid fa-arrow-right fa-2x arrow sm:hidden md:block"></i>
+            </div>
+            <div class="myLocation bg-red-500 w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]"></div>
           </div>
         </section>`;
 
@@ -279,13 +272,9 @@ class Countries {
       // prettier-ignore
       html += `
         <div class="country country${index} w-[220px] pb-8 h-[340px] rounded cursor-pointer overflow-hidden" data-country-id="${index}">
-                <img src="${country.flags.png}" alt="${
-        country.name.official
-      }" class="image w-full h-1/2 rounded-tr rounded-tl"/>
+                <img src="${country.flags.png}" alt="${country.name.official}" class="image w-full h-1/2 rounded-tr rounded-tl"/>
                 <div class="country-info px-4 py-6">
-                  <h2 class="text-lg font-semibold py-2">${
-                    country.name.common
-                  }</h2>
+                  <h2 class="text-lg font-semibold py-2">${country.name.common}</h2>
                   <p class="text-sm py-1">
                     <span class="font-semibold">Population:</span> ${country.population.toLocaleString()}
                   </p>
@@ -293,9 +282,7 @@ class Countries {
                     <span class="font-semibold">Region:</span> ${country.region}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Capital:</span> ${
-                      country.capital
-                    }
+                    <span class="font-semibold">Capital:</span> ${country.capital}
                   </p>
                 </div>
           </div>`;

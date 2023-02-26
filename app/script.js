@@ -18,6 +18,8 @@ class Component {
 }
 
 class Countries {
+  #map;
+  #mapZoomLevel = 5;
   constructor() {
     this.data = new Component();
     this.countriescontainer = document.querySelector(".countries");
@@ -30,6 +32,9 @@ class Countries {
     this.bgToggleP = document.querySelector(".bgToggle > p");
     this.filterRegionContainer = document.querySelector(".filter--container");
     this.outerContainer = document.querySelector(".outer-container");
+    this.mapContainer = document.getElementById("map");
+    this.countryName = document.querySelector(".country-name");
+    this.myLocation = document.getElementById("myLocation");
 
     this.bgToggle.addEventListener(
       "click",
@@ -58,13 +63,14 @@ class Countries {
     if (!btn) return;
     this.outerContainer.classList.add("translate-x-[100%]");
     this.countriescontainer.classList.remove("hidden");
+    this.#map.remove();
+    this.outerContainer.firstElementChild.remove();
   }
 
   renderDetailsPage(e) {
     let countryId = e.target
       .closest(".country")
       .getAttribute("data-country-id");
-    console.log(countryId);
 
     let id = document.querySelector(`.country${countryId}`);
     let countryName = id.lastElementChild.firstElementChild.textContent;
@@ -73,6 +79,7 @@ class Countries {
     this.countriescontainer.classList.add("hidden");
 
     this.fetchCountryDetails(countryName);
+    this._getPosition();
   }
 
   async fetchCountryDetails(countryName) {
@@ -89,14 +96,17 @@ class Countries {
   }
 
   detailsPage(data) {
+    const [lat, lng] = data.latlng;
     // prettier-ignore
     let html = `        
-    <section class="detailsPage mx-8 md:container max-w-full w-full h-full flex-col items-center justify-start relative mt-[-50px] flex">
-          <button class="back px-8 text-sm py-2 rounded absolute left-0 top-[40px] my-8">
+    <section class="detailsPage mx-8 md:container max-w-full w-full h-full flex-col items-center justify-start relative flex ">
+          <button class="back px-8 text-sm py-2 rounded absolute left-10 md:left-0 top-[40px] my-8">
             <i class="fa-solid fa-arrow-left"></i> Back
           </button>
-          <div class="country-full-details mt-32 md:flex justify-between items-center w-full md:gap-[3rem] lg:gap-0">
-            <img src="${data.flags.png}" alt="${data.name.official}" class="w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]">
+          <div class="country-full-details mt-32 flex justify-between flex-col md:flex-row items-center w-full md:gap-[3rem] lg:gap-0">
+            <img src="${data.flags.png}" alt="${
+      data.name.official
+    }" class="w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]">
 
             <div class="detail-container mt-6 md:flex md:gap-[0.3rem] flex-col lg:gap-[1rem]">
               <h2 class="font-bold text-lg md:text-xl">${data.name.common}</h2>
@@ -112,7 +122,9 @@ class Countries {
                     <span class="font-semibold">Region:</span> ${data.region}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Sub Region:</span> ${data.subregion}
+                    <span class="font-semibold">Sub Region:</span> ${
+                      data.subregion
+                    }
                   </p>
                   <p class="text-sm py-1">
                     <span class="font-semibold">Capital:</span> ${data.capital}
@@ -121,7 +133,9 @@ class Countries {
 
                 <div class="detail2 my-6 md:my-0">
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Top Level Domain:</span> ${data.tld[0]}
+                    <span class="font-semibold">Top Level Domain:</span> ${
+                      data.tld[0]
+                    }
                   </p>
                   <p class="text-sm py-1">
                     <span class="font-semibold">Currencies:</span> Euro
@@ -149,22 +163,51 @@ class Countries {
               </div>
             </div>
           </div>
-
-          <div class="map--container flex flex-col md:flex-row my-16 gap-[2rem] justify-center md:justify-between items-center w-full">
-          <div class="country--location--container">
-            <h2 class="text-3xl font-bold my-3">${data.name.common}'s Location</h2>
-            <div class="country--location bg-red-500 w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]"></div>
-          </div>
-            <div class="country-info flex flex-col items-center text-center justify-center">
-              <h2 class="text-1xl font-bold">Your Current Location</h2>
-              <i class="fa-solid fa-arrow-down fa-2x arrow sm:block md:hidden"></i>
-              <i class="fa-solid fa-arrow-right fa-2x arrow sm:hidden md:block"></i>
-            </div>
-            <div class="myLocation bg-red-500 w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]"></div>
-          </div>
         </section>`;
 
-    this.outerContainer.innerHTML = html;
+    this.renderCountriesLocation(
+      this.mapContainer,
+      lat,
+      lng,
+      "Location Pinned!"
+    );
+    this.countryName.textContent = `${data.name.common}'s Location`;
+
+    this.outerContainer.insertAdjacentHTML("afterbegin", html);
+  }
+
+  _getPosition() {
+    let latitude;
+    let longitude;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          latitude = position.coords.latitude;
+          longitude = position.coords.longitude;
+
+          this.renderCountriesLocation(
+            this.myLocation,
+            latitude,
+            longitude,
+            "your current location"
+          );
+        },
+        () => {
+          alert("Could not get your position");
+        }
+      );
+    }
+  }
+
+  renderCountriesLocation(id, lat, lng, popupMsg) {
+    this.#map = L.map(id).setView([lat, lng], this.#mapZoomLevel);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(this.#map);
+
+    L.marker([lat, lng]).addTo(this.#map).bindPopup(popupMsg).openPopup();
   }
 
   filterCountries(e) {
@@ -178,6 +221,7 @@ class Countries {
           .includes(filterAfrica.toLowerCase());
       });
       this.renderCountry(searchFilter);
+      this.dropdown.classList.add("hidden");
     }
 
     if (e.target.textContent === "America") {
@@ -188,6 +232,7 @@ class Countries {
           .includes(filterAmerica.toLowerCase());
       });
       this.renderCountry(searchFilter);
+      this.dropdown.classList.add("hidden");
     }
 
     if (e.target.textContent === "Asia") {
@@ -196,6 +241,7 @@ class Countries {
         return country.region.toLowerCase().includes(filterAsia.toLowerCase());
       });
       this.renderCountry(searchFilter);
+      this.dropdown.classList.add("hidden");
     }
 
     if (e.target.textContent === "Europe") {
@@ -206,6 +252,7 @@ class Countries {
           .includes(filterEurope.toLowerCase());
       });
       this.renderCountry(searchFilter);
+      this.dropdown.classList.add("hidden");
     }
 
     if (e.target.textContent === "Oceania") {
@@ -216,6 +263,7 @@ class Countries {
           .includes(filterOceania.toLowerCase());
       });
       this.renderCountry(searchFilter);
+      this.dropdown.classList.add("hidden");
     }
   }
 

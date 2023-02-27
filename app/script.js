@@ -57,7 +57,7 @@ class Countries {
     if (!btn) return;
     this.outerContainer.classList.add("translate-x-[100%]");
     this.countriescontainer.classList.remove("hidden");
-    this.#map.remove();
+    // this.#map.remove();
     this.outerContainer.firstElementChild.remove();
   }
 
@@ -73,7 +73,7 @@ class Countries {
     this.countriescontainer.classList.add("hidden");
 
     this.fetchCountryDetails(countryName);
-    this._getPosition();
+    // this._getPosition();
   }
 
   async fetchCountryDetails(countryName) {
@@ -91,6 +91,9 @@ class Countries {
 
   detailsPage(data) {
     const [lat, lng] = data.latlng;
+    const [currency] = Object.values(data.currencies);
+    const languages = Object.values(data.languages);
+    const [nativeName] = Object.values(data.name.nativeName);
     // prettier-ignore
     let html = `        
     <section class="detailsPage mx-8 md:container max-w-full w-full h-full flex-col items-center justify-start relative flex ">
@@ -107,7 +110,7 @@ class Countries {
               <div class="detail my-4 md:flex items-start gap-[3rem]">
                 <div class="detail1">
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Native Name:</span> Belgie
+                    <span class="font-semibold">Native Name:</span> ${nativeName.official}
                   </p>
                   <p class="text-sm py-1">
                     <span class="font-semibold">Population:</span> ${data.population.toLocaleString()}
@@ -132,11 +135,10 @@ class Countries {
                     }
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Currencies:</span> Euro
+                    <span class="font-semibold">Currencies:</span> ${currency.name}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Languages:</span> Dutch, French,
-                    German
+                    <span class="font-semibold">Languages:</span> ${languages.join(', ')}
                   </p>
                 </div>
               </div>
@@ -159,13 +161,13 @@ class Countries {
           </div>
         </section>`;
 
-    this.renderCountriesLocation(
-      this.mapContainer,
-      lat,
-      lng,
-      "Location Pinned!"
-    );
-    this.countryName.textContent = `${data.name.common}'s Location`;
+    // this.renderCountriesLocation(
+    //   this.mapContainer,
+    //   lat,
+    //   lng,
+    //   "Location Pinned!"
+    // );
+    // this.countryName.textContent = `${data.name.common}'s Location`;
 
     this.outerContainer.insertAdjacentHTML("afterbegin", html);
   }

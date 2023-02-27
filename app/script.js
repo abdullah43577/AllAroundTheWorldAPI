@@ -1,15 +1,9 @@
 "use strict";
 
 // Todo:
-`// for rest countries API
-
-Maps: You could integrate a map view into your web app to show the location of each country. This can help users visualize the geographic distribution of countries and learn more about their relative positions and sizes.
-
-Data visualization: You could use charts, graphs, and other data visualization tools to display key statistics about each country, such as population, GDP, literacy rate, and more. This can help users quickly understand the relative strengths and weaknesses of each country.
+`Data visualization: You could use charts, graphs, and other data visualization tools to display key statistics about each country, such as population, GDP, literacy rate, and more. This can help users quickly understand the relative strengths and weaknesses of each country.
 
 Quiz or trivia game: You could create a quiz or trivia game that tests users' knowledge of countries and their cultural and geographic features. This can make the web app more fun and interactive and encourage users to spend more time exploring the data.`;
-
-// Todo: for the filter by region section, you can use the `change` eventListener to listen for a change and use an if statement like so: if(the value = 'africa') 'execute code' and so on, you can refer to jonas course for more info or mdn
 
 class Component {
   constructor() {
@@ -193,7 +187,7 @@ class Countries {
           );
         },
         () => {
-          alert("Could not get your position");
+          console.log("Could not get your position");
         }
       );
     }

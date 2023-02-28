@@ -29,6 +29,7 @@ class Countries {
     this.mapContainer = document.getElementById("map");
     this.countryName = document.querySelector(".country-name");
     this.myLocation = document.getElementById("myLocation");
+    this.borderCountries = [];
 
     this.bgToggle.addEventListener(
       "click",
@@ -81,6 +82,8 @@ class Countries {
       const res = await fetch(
         `https://restcountries.com/v3.1/name/${countryName}`
       );
+      if (!res.ok) throw new error("something went wrong");
+
       const [data] = await res.json();
       console.log(data);
       this.detailsPage(data);
@@ -89,11 +92,28 @@ class Countries {
     }
   }
 
+  renderBorderDetails() {
+    console.log("this");
+  }
+
+  // *rendering country borders
+  _renderBorderCountries(clickedCountryData) {
+    this.borderCountries = this.data.filter((country) =>
+      country.borders?.includes(clickedCountryData.cca3)
+    );
+  }
+
   detailsPage(data) {
     const [lat, lng] = data.latlng;
     const [currency] = Object.values(data.currencies);
     const languages = Object.values(data.languages);
     const [nativeName] = Object.values(data.name.nativeName);
+    this._renderBorderCountries(data);
+    const borderCountriesName = this.borderCountries.map(
+      (countryData) => countryData.name.common
+    );
+    // this.getDetails();
+
     // prettier-ignore
     let html = `        
     <section class="detailsPage mx-8 md:container max-w-full w-full h-full flex-col items-center justify-start relative flex ">
@@ -110,7 +130,9 @@ class Countries {
               <div class="detail my-4 md:flex items-start gap-[3rem]">
                 <div class="detail1">
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Native Name:</span> ${nativeName.official}
+                    <span class="font-semibold">Native Name:</span> ${
+                      nativeName.official
+                    }
                   </p>
                   <p class="text-sm py-1">
                     <span class="font-semibold">Population:</span> ${data.population.toLocaleString()}
@@ -135,10 +157,14 @@ class Countries {
                     }
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Currencies:</span> ${currency.name}
+                    <span class="font-semibold">Currencies:</span> ${
+                      currency.name
+                    }
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Languages:</span> ${languages.join(', ')}
+                    <span class="font-semibold">Languages:</span> ${languages.join(
+                      ", "
+                    )}
                   </p>
                 </div>
               </div>
@@ -146,15 +172,15 @@ class Countries {
               <div class="border-countries--container md:flex gap-[1rem]">
                 <h2 class="font-bold my-3">Border Countries:</h2>
                 <div class="border-countries flex gap-3 items-center">
-                  <div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer">
-                    France
-                  </div>
-                  <div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer">
-                    Germany
-                  </div>
-                  <div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer">
-                    Netherlands
-                  </div>
+                ${borderCountriesName
+                  .map(
+                    (
+                      countryName
+                    ) => `<div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer" onclick="renderBorderDetails()">
+                    ${countryName}
+                  </div>`
+                  )
+                  .join("")}
                 </div>
               </div>
             </div>

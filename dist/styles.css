@@ -539,8 +539,8 @@ video {
   left: 35%;
 }
 
-.top-\[13vh\]{
-  top: 13vh;
+.top-\[10vh\]{
+  top: 10vh;
 }
 
 .top-\[14px\]{
@@ -580,6 +580,11 @@ video {
   margin-bottom: 2rem;
 }
 
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .mr-2{
   margin-right: 0.5rem;
 }
@@ -598,6 +603,10 @@ video {
 
 .mt-8{
   margin-top: 2rem;
+}
+
+.mb-8{
+  margin-bottom: 2rem;
 }
 
 .flex{
@@ -648,6 +657,10 @@ video {
   width: 100%;
 }
 
+.w-\[200px\]{
+  width: 200px;
+}
+
 .max-w-full{
   max-width: 100%;
 }
@@ -681,6 +694,10 @@ video {
 
 .items-start{
   align-items: flex-start;
+}
+
+.items-end{
+  align-items: flex-end;
 }
 
 .items-center{
@@ -723,10 +740,6 @@ video {
   overflow: hidden;
 }
 
-.overflow-x-hidden{
-  overflow-x: hidden;
-}
-
 .rounded{
   border-radius: 0.25rem;
 }
@@ -737,6 +750,10 @@ video {
 
 .rounded-tr{
   border-top-right-radius: 0.25rem;
+}
+
+.border{
+  border-width: 1px;
 }
 
 .px-4{
@@ -799,6 +816,11 @@ video {
 .text-sm{
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-3xl{
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .font-bold{
@@ -996,9 +1018,23 @@ i {
   }
 }
 
+@media (min-width: 480px){
+  .sm\:block{
+    display: block;
+  }
+
+  .sm\:hidden{
+    display: none;
+  }
+}
+
 @media (min-width: 768px){
   .md\:left-\[40\%\]{
     left: 40%;
+  }
+
+  .md\:top-\[13vh\]{
+    top: 13vh;
   }
 
   .md\:my-0{
@@ -1006,12 +1042,25 @@ i {
     margin-bottom: 0px;
   }
 
+  .md\:my-auto{
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
   .md\:mt-0{
     margin-top: 0px;
   }
 
+  .md\:block{
+    display: block;
+  }
+
   .md\:flex{
     display: flex;
+  }
+
+  .md\:hidden{
+    display: none;
   }
 
   .md\:h-\[13vh\]{
@@ -1030,6 +1079,10 @@ i {
     width: 500px;
   }
 
+  .md\:w-\[340px\]{
+    width: 340px;
+  }
+
   .md\:flex-row{
     flex-direction: row;
   }
@@ -1044,10 +1097,6 @@ i {
 
   .md\:gap-\[0\.3rem\]{
     gap: 0.3rem;
-  }
-
-  .md\:gap-\[3rem\]{
-    gap: 3rem;
   }
 
   .md\:py-3{
@@ -1067,8 +1116,20 @@ i {
 }
 
 @media (min-width: 976px){
+  .lg\:block{
+    display: block;
+  }
+
+  .lg\:hidden{
+    display: none;
+  }
+
   .lg\:h-\[300px\]{
     height: 300px;
+  }
+
+  .lg\:w-\[340px\]{
+    width: 340px;
   }
 
   .lg\:gap-\[1rem\]{
@@ -1089,7 +1150,7 @@ i {
     align-items: center;
   }
 
-  .xl\:gap-0{
-    gap: 0px;
+  .xl\:justify-between{
+    justify-content: space-between;
   }
 }

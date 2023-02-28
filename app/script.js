@@ -45,9 +45,8 @@ class Countries {
     let btn = e.target.closest(".back");
     if (!btn) return;
     this.outerContainer.classList.add("translate-x-[100%]");
+    this.outerContainer.innerHTML = "";
     this.countriescontainer.classList.remove("hidden");
-    // this.#map.remove();
-    this.outerContainer.firstElementChild.remove();
   }
 
   renderDetailsPage(e) {
@@ -60,24 +59,39 @@ class Countries {
     this.countriescontainer.classList.add("hidden");
 
     this.fetchCountryDetails(countryName);
-    // this._getPosition();
   }
 
   async fetchCountryDetails(countryName) {
+    document.querySelector(".loader-moana").classList.remove("hide-loader");
     try {
       const res = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
-      if (!res.ok) throw new error("something went wrong");
+      if (!res.ok) throw new error("something went wrong, please make sure you're connected to the internet");
 
       const [data] = await res.json();
-      console.log(data);
       this.detailsPage(data);
     } catch (err) {
       console.log(`something went wrong ${err.message}`);
+    } finally {
+      document.querySelector(".loader-moana").classList.add("hide-loader");
     }
   }
 
   renderBorderDetails() {
-    console.log("this");
+    this.bordercontainer = document.querySelector(".border-countries");
+
+    this.bordercontainer.addEventListener(
+      "click",
+      function (e) {
+        if (e.target.textContent === "no border countries") return;
+
+        let bordercountry = e.target.closest(".border-country");
+        if (!bordercountry) return;
+
+        let bordercountryvalue = bordercountry.textContent.trim();
+        this.outerContainer.innerHTML = "";
+        this.fetchCountryDetails(bordercountryvalue);
+      }.bind(this)
+    );
   }
 
   // *rendering country borders
@@ -92,14 +106,13 @@ class Countries {
     const [nativeName] = Object.values(data.name.nativeName);
     this._renderBorderCountries(data);
     const borderCountriesName = this.borderCountries.map((countryData) => countryData.name.common);
-    // this.getDetails();
 
     let html = `        
     <section class="detailsPage mx-8 lg:container max-w-full h-auto flex-col items-start justify-start relative flex">
           <button class="back px-8 text-sm py-2 rounded my-8">
             <i class="fa-solid fa-arrow-left"></i> Back
           </button>
-          <div class="country-full-details flex justify-between flex-col xl:flex-row items-start xl:items-center w-full md:gap-[3rem] xl:gap-0">
+          <div class="country-full-details flex justify-between flex-col xl:flex-row items-start xl:items-center w-full gap-[3rem]">
             <img src="${data.flags.png}" alt="${data.name.official}" class="w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]">
 
             <div class="detail-container md:flex md:gap-[0.3rem] flex-col lg:gap-[1rem]">
@@ -139,28 +152,74 @@ class Countries {
               <div class="border-countries--container md:flex gap-[1rem]">
                 <h2 class="font-bold my-3">Border Countries:</h2>
                 <div class="border-countries flex gap-3 items-center flex-wrap">
-                ${borderCountriesName
-                  .map(
-                    (countryName) => `<div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer" onclick="renderBorderDetails()">
+                ${
+                  borderCountriesName.length
+                    ? borderCountriesName
+                        .map(
+                          (countryName) => `<div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer">
                     ${countryName}
                   </div>`
-                  )
-                  .join("")}
+                        )
+                        .join("")
+                    : `<div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer">no border countries</div>`
+                }
                 </div>
               </div>
             </div>
           </div>
         </section>`;
 
-    // this.renderCountriesLocation(
-    //   this.mapContainer,
-    //   lat,
-    //   lng,
-    //   "Location Pinned!"
-    // );
-    // this.countryName.textContent = `${data.name.common}'s Location`;
+    this.outerContainer.innerHTML = html;
 
-    this.outerContainer.insertAdjacentHTML("afterbegin", html);
+    this.createMapElement();
+    this.renderBorderDetails();
+    this._getPosition();
+
+    let mapReference = this.countryLocation.id;
+    this.renderCountriesLocation(mapReference, lat, lng, "Location Pinned!");
+    this.countryName.textContent = `${data.name.common}'s Location`;
+  }
+
+  createMapElement() {
+    const mapContainer = document.createElement("div");
+    const countryLocationContainer = document.createElement("div");
+    this.countryName = document.createElement("h2");
+    this.countryLocation = document.createElement("div");
+    const countryInfo = document.createElement("div");
+    const locationTxt = document.createElement("h2");
+    const arrowDown = document.createElement("i");
+    const arrowRight = document.createElement("i");
+    this.myLocation = document.createElement("div");
+
+    mapContainer.classList.add("map--container", "mx-8", "flex", "max-w-full", "flex-col", "items-end", "justify-center", "gap-[2rem]", "lg:container", "xl:flex-row", "xl:justify-between", "mb-8");
+    countryLocationContainer.classList.add("country--location--container", "flex", "flex-col", "items-center", "justify-center");
+    this.countryName.classList.add("country-name", "my-3", "text-center", "text-3xl", "font-bold");
+    this.countryLocation.classList.add("country--location", "h-[200px]", "w-[300px]", "md:h-[250px]", "md:w-[500px]", "lg:h-[300px]");
+    countryInfo.classList.add("country-info", "currentLocation", "flex", "flex-col", "items-center", "justify-between", "text-center", "md:my-auto", "mx-auto");
+    locationTxt.classList.add("text-1xl", "font-bold");
+    arrowDown.classList.add("fa-solid", "fa-arrow-down", "fa-2x", "arrow", "sm:block", "lg:hidden");
+    arrowRight.classList.add("fa-solid", "fa-arrow-right", "fa-2x", "arrow", "sm:hidden", "lg:block");
+    this.myLocation.classList.add("h-[200px]", "w-[300px]", "md:h-[250px]", "md:w-[500px]", "lg:h-[300px]");
+
+    mapContainer.appendChild(countryLocationContainer);
+    mapContainer.appendChild(countryInfo);
+    mapContainer.appendChild(this.myLocation);
+
+    this.countryLocation.id = "map";
+    this.myLocation.id = "map2";
+
+    locationTxt.textContent = "Your Current Location";
+
+    countryLocationContainer.appendChild(this.countryName);
+    countryLocationContainer.appendChild(this.countryLocation);
+
+    countryInfo.appendChild(locationTxt);
+    countryInfo.appendChild(arrowDown);
+    countryInfo.appendChild(arrowRight);
+
+    this.outerContainer.appendChild(mapContainer);
+    console.log(mapContainer);
+    console.log(mapContainer.parentElement);
   }
 
   _getPosition() {
@@ -172,7 +231,8 @@ class Countries {
           latitude = position.coords.latitude;
           longitude = position.coords.longitude;
 
-          this.renderCountriesLocation(this.myLocation, latitude, longitude, "your current location");
+          let idReference = this.myLocation.id;
+          this.renderCountriesLocation(idReference, latitude, longitude, "your current location");
         },
         () => {
           console.log("Could not get your position");
@@ -182,7 +242,8 @@ class Countries {
   }
 
   renderCountriesLocation(id, lat, lng, popupMsg) {
-    this.#map = L.map(id).setView([lat, lng], this.#mapZoomLevel);
+    const idEl = document.getElementById(id);
+    this.#map = L.map(idEl).setView([lat, lng], this.#mapZoomLevel);
 
     L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -246,6 +307,9 @@ class Countries {
       return country.name.common.toLowerCase().includes(searchString) || country.name.official.toLowerCase().includes(searchString);
     });
     this.renderCountry(searchFilter);
+
+    if (searchFilter.length === 0) document.querySelector(".loader-moana-input").classList.remove("hide-loader");
+    else document.querySelector(".loader-moana-input").classList.add("hide-loader");
   }
 
   toggleDropDown() {
@@ -271,10 +335,15 @@ class Countries {
   async getCountryData() {
     try {
       const res = await fetch("https://restcountries.com/v3.1/all");
-      if (!res.ok) throw new error("something went wrong");
+      if (!res.ok) throw new error("something went wrong, please make sure you're connected to the internet");
 
       this.data = await res.json();
-      this.renderCountry(this.data);
+      // sorted countries by name
+      const sortedCountries = this.data.sort((a, b) => (a.name.common > b.name.common ? 1 : -1));
+
+      // sorted countries by population
+      // const sortedCountries = this.data.sort((a, b) => (a.population > b.population ? -1 : 1));
+      this.renderCountry(sortedCountries);
     } catch (err) {
       console.log(`something went wrong ${err.message}`);
     } finally {

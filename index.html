@@ -58,7 +58,17 @@
       <!-- loader spinner -->
       <div class="loader left-[35%] md:left-[40%]" id="loader"></div>
 
-      <section class="outer-container absolute top-[13vh] left-0 bottom-0 z-[9999] flex h-full w-full max-w-full translate-x-[100%] flex-col items-center justify-start gap-[8rem]"></section>
+      <div class="loader-moana hide-loader z-[9999] flex flex-col items-center justify-center">
+        <img src="https://github.githubassets.com/images/mona-loading-dark.gif" alt="moana-loading-dark" class="w-[200px] md:w-[340px]" />
+        <p>one moment please</p>
+      </div>
+
+      <div class="loader-moana-input hide-loader flex flex-col items-center justify-center">
+        <img src="https://github.githubassets.com/images/mona-loading-dark.gif" alt="moana-loading-dark" class="w-[200px] md:w-[340px]" />
+        <p>We're sorry, but we couldn't find any results for your search. Please check your spelling and try again.</p>
+      </div>
+
+      <section class="outer-container absolute top-[10vh] left-0 bottom-0 z-[4000] flex h-full w-full max-w-full translate-x-[100%] flex-col items-center justify-start gap-[8rem] md:top-[13vh]"></section>
     </main>
   </body>
 </html>

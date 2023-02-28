@@ -35,12 +35,14 @@ Your users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![](<./screenshots/Screenshot%20(129).png>)
+![](<./screenshots/Screenshot%20(130).png>)
+![](<./screenshots/Screenshot%20(131).png>)
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Solution URL here](https://your-solution-url.com)
+- Live Site URL: [Live site URL here](https://allaroundtheworld-api.netlify.app/)
 
 ## My process
 
@@ -49,42 +51,92 @@ Your users should be able to:
 - Semantic HTML5 markup
 - CSS custom properties
 - Flexbox
-- CSS Grid
 - Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
+- Javascript
+- [Tailwind](https://tailwindcss.com/docs/installation) - CSS Framework
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+This was a really nice project, was a bit challenging but loved the experience all through while building this. I was very happy building this project, because it would be first real project I feel I can include on my portfolio, but it feels really nice.
 
-To see how you can add code snippets, see below:
+I learned so much building this, starting from the css, I learnt how to toggle background colors easily with a little trick from css and javascript. This is far easier than my previous approach in toggling background colors.
 
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
+Also, in javascript, I learned how to work with searchStrings, making it search for match in an object and returning a whole object if it found a match.
+
+I also worked with the `sort()` method. I learnt how it truly works, it's very easy, so I used it sort the json data I got from making the ajax call from the restcountriesapi.
 
 ```css
-.proud-of-this-css {
-  color: papayawhip;
+:root {
+  --primary-color-el: hsl(209, 23%, 22%);
+  --primary-color-bg: hsl(207, 26%, 17%);
+  --primary-color-txt: hsl(0, 0%, 100%);
+}
+
+.light-theme {
+  --primary-color-el: hsl(0, 0%, 100%);
+  --primary-color-bg: hsl(0, 0%, 98%);
+  --primary-color-txt: hsl(200, 15%, 8%);
+  --primary-color-inpt: hsl(0, 0%, 52%);
 }
 ```
 
 ```js
-const proudOfThisFunc = () => {
-  console.log("🎉");
-};
+  toggleBackgroundColor() {
+    document.body.classList.toggle("light-theme");
+    if (document.body.classList.contains("light-theme")) {
+      this.bgToggleI.classList.remove("fa-sun");
+      this.bgToggleI.classList.add("fa-moon");
+
+      this.bgToggleP.textContent = "Dark Mode";
+    } else {
+      this.bgToggleI.classList.remove("fa-moon");
+      this.bgToggleI.classList.add("fa-sun");
+
+      this.bgToggleP.textContent = "Light Mode";
+    }
+  }
+
+
+  searchCountries(e) {
+    const searchString = e.target.value.toLowerCase();
+    const searchFilter = this.data.filter((country) => {
+      return country.name.common.toLowerCase().includes(searchString) || country.name.official.toLowerCase().includes(searchString);
+    });
+    this.renderCountry(searchFilter);
+
+    if (searchFilter.length === 0) document.querySelector(".loader-moana-input").classList.remove("hide-loader");
+    else document.querySelector(".loader-moana-input").classList.add("hide-loader");
+  }
+
+    async getCountryData() {
+    try {
+      const res = await fetch("https://restcountries.com/v3.1/all");
+      if (!res.ok) throw new error("something went wrong, please make sure you're connected to the internet");
+
+      this.data = await res.json();
+      // sorted countries by name
+      const sortedCountries = this.data.sort((a, b) => (a.name.common > b.name.common ? 1 : -1));
+
+      // sorted countries by population
+      // const sortedCountries = this.data.sort((a, b) => (a.population > b.population ? -1 : 1));
+      this.renderCountry(sortedCountries);
+    } catch (err) {
+      console.log(`something went wrong ${err.message}`);
+    } finally {
+      document.querySelector(".loader").classList.add("hide-loader");
+    }
+  }
 ```
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+I'll continue to develop myself as a developer, my aim is to be the best version of myself in this coding journey.
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+- [Font Awesome](https://fontawesome.com/) - All Icons used are from font awesome.
+- [TailwindCSS](https://tailwindcss.com/docs/installation) - This helped styling the page much faster and easier.
+- [Leaflet](https://leafletjs.com/index.html) - This is a js library used for the maps renderd on the details page.
 
 ## Author
 

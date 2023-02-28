@@ -515,34 +515,6 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.container{
-  width: 100%;
-}
-
-@media (min-width: 480px){
-  .container{
-    max-width: 480px;
-  }
-}
-
-@media (min-width: 768px){
-  .container{
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 976px){
-  .container{
-    max-width: 976px;
-  }
-}
-
-@media (min-width: 1300px){
-  .container{
-    max-width: 1300px;
-  }
-}
-
 .absolute{
   position: absolute;
 }
@@ -559,28 +531,28 @@ video {
   left: 0px;
 }
 
-.left-10{
-  left: 2.5rem;
-}
-
 .left-3{
   left: 0.75rem;
 }
 
-.top-\[10vh\]{
-  top: 10vh;
+.left-\[35\%\]{
+  left: 35%;
+}
+
+.top-\[13vh\]{
+  top: 13vh;
 }
 
 .top-\[14px\]{
   top: 14px;
 }
 
-.top-\[40px\]{
-  top: 40px;
-}
-
 .z-\[4000\]{
   z-index: 4000;
+}
+
+.z-\[9999\]{
+  z-index: 9999;
 }
 
 .mx-8{
@@ -620,16 +592,8 @@ video {
   margin-top: 0.75rem;
 }
 
-.mt-32{
-  margin-top: 8rem;
-}
-
 .mt-5{
   margin-top: 1.25rem;
-}
-
-.mt-6{
-  margin-top: 1.5rem;
 }
 
 .mt-8{
@@ -660,12 +624,12 @@ video {
   height: 340px;
 }
 
-.h-full{
-  height: 100%;
+.h-auto{
+  height: auto;
 }
 
-.min-h-\[100vh\]{
-  min-height: 100vh;
+.h-full{
+  height: 100%;
 }
 
 .w-1\/2{
@@ -717,10 +681,6 @@ video {
 
 .items-start{
   align-items: flex-start;
-}
-
-.items-end{
-  align-items: flex-end;
 }
 
 .items-center{
@@ -779,11 +739,6 @@ video {
   border-top-right-radius: 0.25rem;
 }
 
-.bg-red-500{
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
-}
-
 .px-4{
   padding-left: 1rem;
   padding-right: 1rem;
@@ -836,11 +791,6 @@ video {
   text-align: center;
 }
 
-.text-3xl{
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
 .text-lg{
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -874,25 +824,24 @@ video {
   box-sizing: border-box;
 }
 
-/* Todo: after styling with the primary color, you can test the secondary color by commenting out the primary colors and pasting the secondary colors in the root */
-
-/* Todo: use display grid 4, 1fr and set a max-width so it doesn't look ugly on larger screens */
-
-/* * dark mode */
-
 :root {
   --primary-color-el: hsl(209, 23%, 22%);
   --primary-color-bg: hsl(207, 26%, 17%);
   --primary-color-txt: hsl(0, 0%, 100%);
 }
 
-/* *light mode */
-
 .light-theme {
   --primary-color-el: hsl(0, 0%, 100%);
   --primary-color-bg: hsl(0, 0%, 98%);
   --primary-color-txt: hsl(200, 15%, 8%);
   --primary-color-inpt: hsl(0, 0%, 52%);
+}
+
+html,
+body {
+  overflow-x: hidden;
+  height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -987,18 +936,6 @@ i {
   transform: scale(1.05);
 }
 
-/* @layer components {
-  i.icon.fa {
-    @apply sm:block md:hidden;
-  }
-}
-
-@layer components {
-  i.icon2.fa {
-    @apply sm:hidden md:block;
-  }
-} */
-
 @media (min-width: 768px){
   .md\:container{
     width: 100%;
@@ -1029,23 +966,39 @@ i {
   }
 }
 
-@media (min-width: 480px){
-  .sm\:block{
-    display: block;
+@media (min-width: 976px){
+  .lg\:container{
+    width: 100%;
   }
 
-  .sm\:hidden{
-    display: none;
+  @media (min-width: 480px){
+    .lg\:container{
+      max-width: 480px;
+    }
+  }
+
+  @media (min-width: 768px){
+    .lg\:container{
+      max-width: 768px;
+    }
+  }
+
+  @media (min-width: 976px){
+    .lg\:container{
+      max-width: 976px;
+    }
+  }
+
+  @media (min-width: 1300px){
+    .lg\:container{
+      max-width: 1300px;
+    }
   }
 }
 
 @media (min-width: 768px){
-  .md\:left-0{
-    left: 0px;
-  }
-
-  .md\:top-\[13vh\]{
-    top: 13vh;
+  .md\:left-\[40\%\]{
+    left: 40%;
   }
 
   .md\:my-0{
@@ -1053,25 +1006,12 @@ i {
     margin-bottom: 0px;
   }
 
-  .md\:my-auto{
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-
   .md\:mt-0{
     margin-top: 0px;
   }
 
-  .md\:block{
-    display: block;
-  }
-
   .md\:flex{
     display: flex;
-  }
-
-  .md\:hidden{
-    display: none;
   }
 
   .md\:h-\[13vh\]{
@@ -1131,15 +1071,25 @@ i {
     height: 300px;
   }
 
-  .lg\:gap-0{
-    gap: 0px;
-  }
-
   .lg\:gap-\[1rem\]{
     gap: 1rem;
   }
 
   .lg\:gap-\[2\.9rem\]{
     gap: 2.9rem;
+  }
+}
+
+@media (min-width: 1300px){
+  .xl\:flex-row{
+    flex-direction: row;
+  }
+
+  .xl\:items-center{
+    align-items: center;
+  }
+
+  .xl\:gap-0{
+    gap: 0px;
   }
 }

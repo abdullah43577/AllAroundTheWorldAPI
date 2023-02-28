@@ -11,7 +11,7 @@
     <script defer src="app/script.js"></script>
     <title>FrontEnd Mentor Challenge[Rest Countries API]</title>
   </head>
-  <body class="relative h-full min-h-[100vh] w-full overflow-x-hidden">
+  <body class="relative w-full">
     <header class="relative z-[4000] flex h-[10vh] w-full items-center justify-center md:h-[13vh]">
       <nav class="mx-8 flex w-full max-w-full items-center justify-between md:container">
         <div class="question font-semibold">
@@ -25,7 +25,7 @@
       </nav>
     </header>
 
-    <main class="mt-5 flex h-full w-full flex-col justify-center md:items-center">
+    <main class="mt-5 flex w-full flex-col justify-center md:items-center">
       <section class="inner--section mx-8 max-w-full md:container">
         <div class="navigation--section flex flex-col justify-start md:flex-row md:items-center md:justify-between">
           <div class="input--container relative w-full md:w-[500px]">
@@ -56,38 +56,9 @@
       <section class="countries mx-8 mt-10 flex max-w-full flex-wrap items-center justify-center gap-[2rem] md:container lg:gap-[2.9rem]"></section>
 
       <!-- loader spinner -->
-      <div class="loader" id="loader"></div>
+      <div class="loader left-[35%] md:left-[40%]" id="loader"></div>
 
-      <section class="outer-container absolute top-[10vh] left-0 bottom-0 flex h-full min-h-[100vh] w-full max-w-full translate-x-[100%] flex-col items-center justify-start gap-[8rem] md:top-[13vh]">
-        <!-- <div
-          class="map--container mx-8 flex w-full max-w-full flex-col items-end justify-center gap-[2rem] md:container md:flex-row md:justify-between"
-        >
-          <div
-            class="country--location--container flex flex-col items-center justify-center"
-          >
-            <h2 class="country-name my-3 text-center text-3xl font-bold"></h2>
-            <div
-              class="country--location h-[200px] w-[300px] md:h-[250px] md:w-[500px] lg:h-[300px]"
-              id="map"
-            ></div>
-          </div>
-          <div
-            class="country-info currentLocation flex flex-col items-center justify-center text-center md:my-auto"
-          >
-            <h2 class="text-1xl font-bold">Your Current Location</h2>
-            <i
-              class="fa-solid fa-arrow-down fa-2x arrow sm:block md:hidden"
-            ></i>
-            <i
-              class="fa-solid fa-arrow-right fa-2x arrow sm:hidden md:block"
-            ></i>
-          </div>
-          <div
-            class="h-[200px] w-[300px] md:h-[250px] md:w-[500px] lg:h-[300px]"
-            id="myLocation"
-          ></div>
-        </div> -->
-      </section>
+      <section class="outer-container absolute top-[13vh] left-0 bottom-0 z-[9999] flex h-full w-full max-w-full translate-x-[100%] flex-col items-center justify-start gap-[8rem]"></section>
     </main>
   </body>
 </html>

@@ -95,14 +95,14 @@ class Countries {
     // this.getDetails();
 
     let html = `        
-    <section class="detailsPage mx-8 md:container max-w-full w-full h-full flex-col items-center justify-start relative flex ">
-          <button class="back px-8 text-sm py-2 rounded absolute left-10 md:left-0 top-[40px] my-8">
+    <section class="detailsPage mx-8 lg:container max-w-full h-auto flex-col items-start justify-start relative flex">
+          <button class="back px-8 text-sm py-2 rounded my-8">
             <i class="fa-solid fa-arrow-left"></i> Back
           </button>
-          <div class="country-full-details mt-32 flex justify-between flex-col md:flex-row items-center w-full md:gap-[3rem] lg:gap-0">
+          <div class="country-full-details flex justify-between flex-col xl:flex-row items-start xl:items-center w-full md:gap-[3rem] xl:gap-0">
             <img src="${data.flags.png}" alt="${data.name.official}" class="w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]">
 
-            <div class="detail-container mt-6 md:flex md:gap-[0.3rem] flex-col lg:gap-[1rem]">
+            <div class="detail-container md:flex md:gap-[0.3rem] flex-col lg:gap-[1rem]">
               <h2 class="font-bold text-lg md:text-xl">${data.name.common}</h2>
               <div class="detail my-4 md:flex items-start gap-[3rem]">
                 <div class="detail1">
@@ -138,7 +138,7 @@ class Countries {
 
               <div class="border-countries--container md:flex gap-[1rem]">
                 <h2 class="font-bold my-3">Border Countries:</h2>
-                <div class="border-countries flex gap-3 items-center">
+                <div class="border-countries flex gap-3 items-center flex-wrap">
                 ${borderCountriesName
                   .map(
                     (countryName) => `<div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer" onclick="renderBorderDetails()">

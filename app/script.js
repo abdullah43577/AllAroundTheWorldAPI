@@ -31,24 +31,12 @@ class Countries {
     this.myLocation = document.getElementById("myLocation");
     this.borderCountries = [];
 
-    this.bgToggle.addEventListener(
-      "click",
-      this.toggleBackgroundColor.bind(this)
-    );
+    this.bgToggle.addEventListener("click", this.toggleBackgroundColor.bind(this));
     this.filterBody.addEventListener("click", this.toggleDropDown.bind(this));
     this.input.addEventListener("keyup", this.searchCountries.bind(this));
-    this.filterRegionContainer.addEventListener(
-      "click",
-      this.filterCountries.bind(this)
-    );
-    this.countriescontainer.addEventListener(
-      "click",
-      this.renderDetailsPage.bind(this)
-    );
-    this.outerContainer.addEventListener(
-      "click",
-      this.closeDetailsPage.bind(this)
-    );
+    this.filterRegionContainer.addEventListener("click", this.filterCountries.bind(this));
+    this.countriescontainer.addEventListener("click", this.renderDetailsPage.bind(this));
+    this.outerContainer.addEventListener("click", this.closeDetailsPage.bind(this));
 
     this.getCountryData();
   }
@@ -63,9 +51,7 @@ class Countries {
   }
 
   renderDetailsPage(e) {
-    let countryId = e.target
-      .closest(".country")
-      .getAttribute("data-country-id");
+    let countryId = e.target.closest(".country").getAttribute("data-country-id");
 
     let id = document.querySelector(`.country${countryId}`);
     let countryName = id.lastElementChild.firstElementChild.textContent;
@@ -79,9 +65,7 @@ class Countries {
 
   async fetchCountryDetails(countryName) {
     try {
-      const res = await fetch(
-        `https://restcountries.com/v3.1/name/${countryName}`
-      );
+      const res = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
       if (!res.ok) throw new error("something went wrong");
 
       const [data] = await res.json();
@@ -98,9 +82,7 @@ class Countries {
 
   // *rendering country borders
   _renderBorderCountries(clickedCountryData) {
-    this.borderCountries = this.data.filter((country) =>
-      country.borders?.includes(clickedCountryData.cca3)
-    );
+    this.borderCountries = this.data.filter((country) => country.borders?.includes(clickedCountryData.cca3));
   }
 
   detailsPage(data) {
@@ -109,30 +91,23 @@ class Countries {
     const languages = Object.values(data.languages);
     const [nativeName] = Object.values(data.name.nativeName);
     this._renderBorderCountries(data);
-    const borderCountriesName = this.borderCountries.map(
-      (countryData) => countryData.name.common
-    );
+    const borderCountriesName = this.borderCountries.map((countryData) => countryData.name.common);
     // this.getDetails();
 
-    // prettier-ignore
     let html = `        
     <section class="detailsPage mx-8 md:container max-w-full w-full h-full flex-col items-center justify-start relative flex ">
           <button class="back px-8 text-sm py-2 rounded absolute left-10 md:left-0 top-[40px] my-8">
             <i class="fa-solid fa-arrow-left"></i> Back
           </button>
           <div class="country-full-details mt-32 flex justify-between flex-col md:flex-row items-center w-full md:gap-[3rem] lg:gap-0">
-            <img src="${data.flags.png}" alt="${
-      data.name.official
-    }" class="w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]">
+            <img src="${data.flags.png}" alt="${data.name.official}" class="w-[300px] h-[200px] md:w-[500px] md:h-[250px] lg:h-[300px]">
 
             <div class="detail-container mt-6 md:flex md:gap-[0.3rem] flex-col lg:gap-[1rem]">
               <h2 class="font-bold text-lg md:text-xl">${data.name.common}</h2>
               <div class="detail my-4 md:flex items-start gap-[3rem]">
                 <div class="detail1">
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Native Name:</span> ${
-                      nativeName.official
-                    }
+                    <span class="font-semibold">Native Name:</span> ${nativeName.official}
                   </p>
                   <p class="text-sm py-1">
                     <span class="font-semibold">Population:</span> ${data.population.toLocaleString()}
@@ -141,9 +116,7 @@ class Countries {
                     <span class="font-semibold">Region:</span> ${data.region}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Sub Region:</span> ${
-                      data.subregion
-                    }
+                    <span class="font-semibold">Sub Region:</span> ${data.subregion}
                   </p>
                   <p class="text-sm py-1">
                     <span class="font-semibold">Capital:</span> ${data.capital}
@@ -152,19 +125,13 @@ class Countries {
 
                 <div class="detail2 my-6 md:my-0">
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Top Level Domain:</span> ${
-                      data.tld[0]
-                    }
+                    <span class="font-semibold">Top Level Domain:</span> ${data.tld[0]}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Currencies:</span> ${
-                      currency.name
-                    }
+                    <span class="font-semibold">Currencies:</span> ${currency.name}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Languages:</span> ${languages.join(
-                      ", "
-                    )}
+                    <span class="font-semibold">Languages:</span> ${languages.join(", ")}
                   </p>
                 </div>
               </div>
@@ -174,9 +141,7 @@ class Countries {
                 <div class="border-countries flex gap-3 items-center">
                 ${borderCountriesName
                   .map(
-                    (
-                      countryName
-                    ) => `<div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer" onclick="renderBorderDetails()">
+                    (countryName) => `<div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer" onclick="renderBorderDetails()">
                     ${countryName}
                   </div>`
                   )
@@ -207,12 +172,7 @@ class Countries {
           latitude = position.coords.latitude;
           longitude = position.coords.longitude;
 
-          this.renderCountriesLocation(
-            this.myLocation,
-            latitude,
-            longitude,
-            "your current location"
-          );
+          this.renderCountriesLocation(this.myLocation, latitude, longitude, "your current location");
         },
         () => {
           console.log("Could not get your position");
@@ -225,8 +185,7 @@ class Countries {
     this.#map = L.map(id).setView([lat, lng], this.#mapZoomLevel);
 
     L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.#map);
 
     L.marker([lat, lng]).addTo(this.#map).bindPopup(popupMsg).openPopup();
@@ -238,9 +197,7 @@ class Countries {
     if (e.target.textContent === "Africa") {
       let filterAfrica = e.target.textContent;
       searchFilter = this.data.filter((country) => {
-        return country.region
-          .toLowerCase()
-          .includes(filterAfrica.toLowerCase());
+        return country.region.toLowerCase().includes(filterAfrica.toLowerCase());
       });
       this.renderCountry(searchFilter);
       this.dropdown.classList.add("hidden");
@@ -249,9 +206,7 @@ class Countries {
     if (e.target.textContent === "America") {
       let filterAmerica = e.target.textContent;
       searchFilter = this.data.filter((country) => {
-        return country.region
-          .toLowerCase()
-          .includes(filterAmerica.toLowerCase());
+        return country.region.toLowerCase().includes(filterAmerica.toLowerCase());
       });
       this.renderCountry(searchFilter);
       this.dropdown.classList.add("hidden");
@@ -269,9 +224,7 @@ class Countries {
     if (e.target.textContent === "Europe") {
       let filterEurope = e.target.textContent;
       searchFilter = this.data.filter((country) => {
-        return country.region
-          .toLowerCase()
-          .includes(filterEurope.toLowerCase());
+        return country.region.toLowerCase().includes(filterEurope.toLowerCase());
       });
       this.renderCountry(searchFilter);
       this.dropdown.classList.add("hidden");
@@ -280,9 +233,7 @@ class Countries {
     if (e.target.textContent === "Oceania") {
       let filterOceania = e.target.textContent;
       searchFilter = this.data.filter((country) => {
-        return country.region
-          .toLowerCase()
-          .includes(filterOceania.toLowerCase());
+        return country.region.toLowerCase().includes(filterOceania.toLowerCase());
       });
       this.renderCountry(searchFilter);
       this.dropdown.classList.add("hidden");
@@ -292,10 +243,7 @@ class Countries {
   searchCountries(e) {
     const searchString = e.target.value.toLowerCase();
     const searchFilter = this.data.filter((country) => {
-      return (
-        country.name.common.toLowerCase().includes(searchString) ||
-        country.name.official.toLowerCase().includes(searchString)
-      );
+      return country.name.common.toLowerCase().includes(searchString) || country.name.official.toLowerCase().includes(searchString);
     });
     this.renderCountry(searchFilter);
   }
@@ -339,7 +287,6 @@ class Countries {
     let index = 0;
     countryData.forEach((country) => {
       index++;
-      // prettier-ignore
       html += `
         <div class="country country${index} w-[220px] pb-8 h-[340px] rounded cursor-pointer overflow-hidden" data-country-id="${index}">
                 <img src="${country.flags.png}" alt="${country.name.official}" class="image w-full h-1/2 rounded-tr rounded-tl"/>

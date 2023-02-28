@@ -4,34 +4,16 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      defer
-      src="https://kit.fontawesome.com/37007fa821.js"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-      crossorigin=""
-    />
+    <script defer src="https://kit.fontawesome.com/37007fa821.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
     <link rel="stylesheet" href="dist/styles.css" />
-    <script
-      defer
-      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-      crossorigin=""
-    ></script>
+    <script defer src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <script defer src="app/script.js"></script>
     <title>FrontEnd Mentor Challenge[Rest Countries API]</title>
   </head>
   <body class="relative h-full min-h-[100vh] w-full overflow-x-hidden">
-    <header
-      class="relative z-[4000] flex h-[10vh] w-full items-center justify-center md:h-[13vh]"
-    >
-      <nav
-        class="mx-8 flex w-full max-w-full items-center justify-between md:container"
-      >
+    <header class="relative z-[4000] flex h-[10vh] w-full items-center justify-center md:h-[13vh]">
+      <nav class="mx-8 flex w-full max-w-full items-center justify-between md:container">
         <div class="question font-semibold">
           <h2 class="text-sm md:text-lg">Where in the world?</h2>
         </div>
@@ -43,38 +25,21 @@
       </nav>
     </header>
 
-    <main
-      class="mt-5 flex h-full w-full flex-col justify-center md:items-center"
-    >
+    <main class="mt-5 flex h-full w-full flex-col justify-center md:items-center">
       <section class="inner--section mx-8 max-w-full md:container">
-        <div
-          class="navigation--section flex flex-col justify-start md:flex-row md:items-center md:justify-between"
-        >
+        <div class="navigation--section flex flex-col justify-start md:flex-row md:items-center md:justify-between">
           <div class="input--container relative w-full md:w-[500px]">
-            <input
-              type="text"
-              placeholder="Search for a country..."
-              class="w-full cursor-pointer rounded px-6 py-3 pl-12 text-sm outline-none"
-              autofocus
-            />
-            <i
-              class="fa-solid fa-magnifying-glass absolute top-[14px] left-3"
-            ></i>
+            <input type="text" placeholder="Search for a country..." class="w-full cursor-pointer rounded px-6 py-3 pl-12 text-sm outline-none" autofocus />
+            <i class="fa-solid fa-magnifying-glass absolute top-[14px] left-3"></i>
           </div>
 
-          <div
-            class="filter--container relative mt-8 w-1/2 rounded text-sm md:mt-0 md:w-[200px]"
-          >
-            <div
-              class="filterbyregion flex cursor-pointer items-center justify-between rounded px-4 py-4 md:py-3"
-            >
+          <div class="filter--container relative mt-8 w-1/2 rounded text-sm md:mt-0 md:w-[200px]">
+            <div class="filterbyregion flex cursor-pointer items-center justify-between rounded px-4 py-4 md:py-3">
               <p class="text-sm">Filter By Region</p>
               <i class="fa-solid fa-angle-up"></i>
             </div>
 
-            <div
-              class="dropdown absolute mt-3 hidden w-full rounded px-4 py-4 text-sm"
-            >
+            <div class="dropdown absolute mt-3 hidden w-full rounded px-4 py-4 text-sm">
               <ul>
                 <li class="py-1"><a href="#">Africa</a></li>
                 <li class="py-1"><a href="#">America</a></li>
@@ -88,16 +53,12 @@
       </section>
 
       <!-- *country section -->
-      <section
-        class="countries mx-8 mt-10 flex max-w-full flex-wrap items-center justify-center gap-[2rem] md:container lg:gap-[2.9rem]"
-      ></section>
+      <section class="countries mx-8 mt-10 flex max-w-full flex-wrap items-center justify-center gap-[2rem] md:container lg:gap-[2.9rem]"></section>
 
       <!-- loader spinner -->
       <div class="loader" id="loader"></div>
 
-      <section
-        class="outer-container absolute top-[10vh] left-0 bottom-0 flex h-full min-h-[100vh] w-full max-w-full translate-x-[100%] flex-col items-center justify-start gap-[8rem] md:top-[13vh]"
-      >
+      <section class="outer-container absolute top-[10vh] left-0 bottom-0 flex h-full min-h-[100vh] w-full max-w-full translate-x-[100%] flex-col items-center justify-start gap-[8rem] md:top-[13vh]">
         <!-- <div
           class="map--container mx-8 flex w-full max-w-full flex-col items-end justify-center gap-[2rem] md:container md:flex-row md:justify-between"
         >

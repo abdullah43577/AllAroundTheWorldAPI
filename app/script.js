@@ -100,12 +100,13 @@ class Countries {
   }
 
   detailsPage(data) {
-    const [lat, lng] = data.latlng;
-    const [currency] = Object.values(data.currencies);
-    const languages = Object.values(data.languages);
-    const [nativeName] = Object.values(data.name.nativeName);
+    // providing defaults values if data is undefined, "Antartica was a caused a bug without using this"
+    const [lat, lng] = data?.latlng ?? [];
+    const [currency] = Object.values(data?.currencies ?? {});
+    const languages = Object.values(data?.languages ?? {});
+    const [nativeName] = Object.values(data?.name?.nativeName ?? {});
     this._renderBorderCountries(data);
-    const borderCountriesName = this.borderCountries.map((countryData) => countryData.name.common);
+    const borderCountriesName = this.borderCountries?.map((countryData) => countryData?.name?.common);
 
     let html = `        
     <section class="detailsPage mx-8 lg:container max-w-full h-auto flex-col items-start justify-start relative flex">
@@ -120,7 +121,7 @@ class Countries {
               <div class="detail my-4 md:flex items-start gap-[3rem]">
                 <div class="detail1">
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Native Name:</span> ${nativeName.official}
+                    <span class="font-semibold">Native Name:</span> ${nativeName ? nativeName.official : data.name.official}
                   </p>
                   <p class="text-sm py-1">
                     <span class="font-semibold">Population:</span> ${data.population.toLocaleString()}
@@ -129,10 +130,10 @@ class Countries {
                     <span class="font-semibold">Region:</span> ${data.region}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Sub Region:</span> ${data.subregion}
+                    <span class="font-semibold">Sub Region:</span> ${data.subregion ? data.subregion : "No subregion"}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Capital:</span> ${data.capital}
+                    <span class="font-semibold">Capital:</span> ${data.capital ? data.capital : "No capital"}
                   </p>
                 </div>
 
@@ -141,10 +142,10 @@ class Countries {
                     <span class="font-semibold">Top Level Domain:</span> ${data.tld[0]}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Currencies:</span> ${currency.name}
+                    <span class="font-semibold">Currencies:</span> ${currency ? currency.name : "No currency used"}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Languages:</span> ${languages.join(", ")}
+                    <span class="font-semibold">Languages:</span> ${languages.length ? languages.join(", ") : "No languages"}
                   </p>
                 </div>
               </div>
@@ -218,8 +219,6 @@ class Countries {
     countryInfo.appendChild(arrowRight);
 
     this.outerContainer.appendChild(mapContainer);
-    console.log(mapContainer);
-    console.log(mapContainer.parentElement);
   }
 
   _getPosition() {
@@ -339,11 +338,11 @@ class Countries {
 
       this.data = await res.json();
       // sorted countries by name
-      const sortedCountries = this.data.sort((a, b) => (a.name.common > b.name.common ? 1 : -1));
+      this.data.sort((a, b) => (a.name.common > b.name.common ? 1 : -1));
 
       // sorted countries by population
-      // const sortedCountries = this.data.sort((a, b) => (a.population > b.population ? -1 : 1));
-      this.renderCountry(sortedCountries);
+      // this.data.sort((a, b) => (a.population > b.population ? -1 : 1));
+      this.renderCountry(this.data);
     } catch (err) {
       console.log(`something went wrong ${err.message}`);
     } finally {
@@ -368,7 +367,7 @@ class Countries {
                     <span class="font-semibold">Region:</span> ${country.region}
                   </p>
                   <p class="text-sm py-1">
-                    <span class="font-semibold">Capital:</span> ${country.capital}
+                    <span class="font-semibold">Capital:</span> ${country.capital ? country.capital : "No Capital"}
                   </p>
                 </div>
           </div>`;

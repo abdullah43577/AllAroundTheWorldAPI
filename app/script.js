@@ -1,9 +1,7 @@
 "use strict";
 
-// Todo:
-`Data visualization: You could use charts, graphs, and other data visualization tools to display key statistics about each country, such as population, GDP, literacy rate, and more. This can help users quickly understand the relative strengths and weaknesses of each country.
-
-Quiz or trivia game: You could create a quiz or trivia game that tests users' knowledge of countries and their cultural and geographic features. This can make the web app more fun and interactive and encourage users to spend more time exploring the data.`;
+// Must Read:
+// While reading the code, I'd recommend reading it from the bottom all the way up.
 
 class Component {
   constructor() {
@@ -20,11 +18,13 @@ class Countries {
     this.bgToggle = document.querySelector(".bgToggle");
     this.filterBody = document.querySelector(".filterbyregion");
     this.dropdown = document.querySelector(".dropdown");
+
     this.filtericon = document.querySelector(".filterbyregion > i");
     this.input = document.querySelector("input");
     this.bgToggleI = document.querySelector(".bgToggle > i");
     this.bgToggleP = document.querySelector(".bgToggle > p");
     this.filterRegionContainer = document.querySelector(".filter--container");
+
     this.outerContainer = document.querySelector(".outer-container");
     this.mapContainer = document.getElementById("map");
     this.countryName = document.querySelector(".country-name");
@@ -34,6 +34,7 @@ class Countries {
     this.bgToggle.addEventListener("click", this.toggleBackgroundColor.bind(this));
     this.filterBody.addEventListener("click", this.toggleDropDown.bind(this));
     this.input.addEventListener("keyup", this.searchCountries.bind(this));
+
     this.filterRegionContainer.addEventListener("click", this.filterCountries.bind(this));
     this.countriescontainer.addEventListener("click", this.renderDetailsPage.bind(this));
     this.outerContainer.addEventListener("click", this.closeDetailsPage.bind(this));
@@ -44,6 +45,7 @@ class Countries {
   closeDetailsPage(e) {
     let btn = e.target.closest(".back");
     if (!btn) return;
+
     this.outerContainer.classList.add("translate-x-[100%]");
     this.outerContainer.innerHTML = "";
     this.countriescontainer.classList.remove("hidden");
@@ -100,7 +102,7 @@ class Countries {
   }
 
   detailsPage(data) {
-    // providing defaults values if data is undefined, "Antartica was a caused a bug without using this"
+    // providing defaults values if data is undefined, "Antartica caused a bug without using this"
     const [lat, lng] = data?.latlng ?? [];
     const [currency] = Object.values(data?.currencies ?? {});
     const languages = Object.values(data?.languages ?? {});
@@ -186,6 +188,7 @@ class Countries {
     const countryLocationContainer = document.createElement("div");
     this.countryName = document.createElement("h2");
     this.countryLocation = document.createElement("div");
+
     const countryInfo = document.createElement("div");
     const locationTxt = document.createElement("h2");
     const arrowDown = document.createElement("i");
@@ -196,6 +199,7 @@ class Countries {
     countryLocationContainer.classList.add("country--location--container", "flex", "flex-col", "items-center", "justify-center");
     this.countryName.classList.add("country-name", "my-3", "text-center", "text-3xl", "font-bold");
     this.countryLocation.classList.add("country--location", "h-[200px]", "w-[300px]", "md:h-[250px]", "md:w-[500px]", "lg:h-[300px]");
+
     countryInfo.classList.add("country-info", "currentLocation", "flex", "flex-col", "items-center", "justify-between", "text-center", "md:my-auto", "mx-auto");
     locationTxt.classList.add("text-1xl", "font-bold");
     arrowDown.classList.add("fa-solid", "fa-arrow-down", "fa-2x", "arrow", "sm:block", "lg:hidden");

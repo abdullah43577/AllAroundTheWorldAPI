@@ -98,7 +98,7 @@ class Countries {
 
   // *rendering country borders
   _renderBorderCountries(clickedCountryData) {
-    this.borderCountries = this.data.filter((country) => country.borders?.includes(clickedCountryData.cca3));
+    this.borderCountries = this.data.filter(country => country.borders?.includes(clickedCountryData.cca3));
   }
 
   detailsPage(data) {
@@ -108,7 +108,7 @@ class Countries {
     const languages = Object.values(data?.languages ?? {});
     const [nativeName] = Object.values(data?.name?.nativeName ?? {});
     this._renderBorderCountries(data);
-    const borderCountriesName = this.borderCountries?.map((countryData) => countryData?.name?.common);
+    const borderCountriesName = this.borderCountries?.map(countryData => countryData?.name?.common);
 
     let html = `        
     <section class="detailsPage mx-8 lg:container max-w-full h-auto flex-col items-start justify-start relative flex">
@@ -159,7 +159,7 @@ class Countries {
                   borderCountriesName.length
                     ? borderCountriesName
                         .map(
-                          (countryName) => `<div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer">
+                          countryName => `<div class="border-country text-center px-4 py-2 text-sm rounded cursor-pointer">
                     ${countryName}
                   </div>`
                         )
@@ -230,7 +230,7 @@ class Countries {
     let longitude;
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        position => {
           latitude = position.coords.latitude;
           longitude = position.coords.longitude;
 
@@ -260,7 +260,7 @@ class Countries {
 
     if (e.target.textContent === "Africa") {
       let filterAfrica = e.target.textContent;
-      searchFilter = this.data.filter((country) => {
+      searchFilter = this.data.filter(country => {
         return country.region.toLowerCase().includes(filterAfrica.toLowerCase());
       });
       this.renderCountry(searchFilter);
@@ -269,7 +269,7 @@ class Countries {
 
     if (e.target.textContent === "America") {
       let filterAmerica = e.target.textContent;
-      searchFilter = this.data.filter((country) => {
+      searchFilter = this.data.filter(country => {
         return country.region.toLowerCase().includes(filterAmerica.toLowerCase());
       });
       this.renderCountry(searchFilter);
@@ -278,7 +278,7 @@ class Countries {
 
     if (e.target.textContent === "Asia") {
       let filterAsia = e.target.textContent;
-      searchFilter = this.data.filter((country) => {
+      searchFilter = this.data.filter(country => {
         return country.region.toLowerCase().includes(filterAsia.toLowerCase());
       });
       this.renderCountry(searchFilter);
@@ -287,7 +287,7 @@ class Countries {
 
     if (e.target.textContent === "Europe") {
       let filterEurope = e.target.textContent;
-      searchFilter = this.data.filter((country) => {
+      searchFilter = this.data.filter(country => {
         return country.region.toLowerCase().includes(filterEurope.toLowerCase());
       });
       this.renderCountry(searchFilter);
@@ -296,7 +296,7 @@ class Countries {
 
     if (e.target.textContent === "Oceania") {
       let filterOceania = e.target.textContent;
-      searchFilter = this.data.filter((country) => {
+      searchFilter = this.data.filter(country => {
         return country.region.toLowerCase().includes(filterOceania.toLowerCase());
       });
       this.renderCountry(searchFilter);
@@ -306,7 +306,7 @@ class Countries {
 
   searchCountries(e) {
     const searchString = e.target.value.toLowerCase();
-    const searchFilter = this.data.filter((country) => {
+    const searchFilter = this.data.filter(country => {
       return country.name.common.toLowerCase().includes(searchString) || country.name.official.toLowerCase().includes(searchString);
     });
     this.renderCountry(searchFilter);
@@ -357,7 +357,7 @@ class Countries {
   renderCountry(countryData) {
     let html = "";
     let index = 0;
-    countryData.forEach((country) => {
+    countryData.forEach(country => {
       index++;
       html += `
         <div class="country country${index} w-[220px] pb-8 h-[340px] rounded cursor-pointer overflow-hidden" data-country-id="${index}">
